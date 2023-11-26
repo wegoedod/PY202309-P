@@ -37,12 +37,12 @@ if lang == "1":
 if lang == "0":
     finalResult = []
     anagram = generate_anagrams(word)
-    a = []
+    engDictFinal = []
     for i in engDict.engDict:
         dictWord = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z]", "",i.lower())
         if len(dictWord)==wordLen:
-            a.append(dictWord)
-    finalResult = list(set(anagram) & set(a))
+            engDictFinal.append(dictWord)
+    finalResult = list(set(anagram) & set(engDictFinal))
     if finalResult == []:
         print("영어 사전에 해당하는 단어가 없습니다.")
     else:
