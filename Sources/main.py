@@ -2,6 +2,9 @@ from itertools import permutations
 import korSeparator
 import engDict
 import re
+import time
+start = time.time()  # 시작 시간 저장
+
 
 def generate_anagrams(word):
     # 문자열의 모든 순열을 생성
@@ -34,69 +37,12 @@ if lang == "1":
 if lang == "0":
     finalResult = []
     anagram = generate_anagrams(word)
-    engDictFinal = [[[[] for n in range(27)] for j in range(27)] for i in range(27)]
+    a = []
     for i in engDict.engDict:
         dictWord = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z]", "",i.lower())
-        dictAscii0 = ord(dictWord[0])-97
-        dictAscii1 = ord(dictWord[1])-97
-        dictAscii2 = ord(dictWord[2])-97
-        if len(dictWord) == wordLen:
-            if dictAscii0<0:
-                if dictAscii1<0:
-                    if dictAscii2<0:
-                        engDictFinal[26][26][26].append(dictWord)
-                    else:
-                        engDictFinal[26][26][dictAscii2].append(dictWord)
-                else:
-                    if dictAscii2<0:
-                        engDictFinal[26][dictAscii1][26].append(dictWord)
-                    else:
-                        engDictFinal[26][dictAscii1][dictAscii2].append(dictWord)
-            else:
-                if dictAscii1<0:
-                    if dictAscii2<0:
-                        engDictFinal[dictAscii0][26][26].append(dictWord)
-                    else:
-                        engDictFinal[dictAscii0][26][dictAscii2].append(dictWord)
-                else:
-                    if dictAscii2<0:
-                        engDictFinal[dictAscii0][dictAscii1][26].append(dictWord)
-                    else:
-                        engDictFinal[dictAscii0][dictAscii1][dictAscii2].append(dictWord)
-    for i in anagram:
-        ascii0 = ord(i[0])-97
-        ascii1 = ord(i[1])-97
-        ascii2 = ord(i[2])-97
-        if ascii0<0:
-            if ascii1<0:
-                if ascii2<0:
-                    if i in engDictFinal[26][26][26]:
-                        finalResult.append(i)
-                else:
-                    if i in engDictFinal[26][26][ascii2]:
-                        finalResult.append(i)
-            else:
-                if ascii2<0:
-                    if i in engDictFinal[26][ascii1][26]:
-                        finalResult.append(i)
-                else:
-                    if i in engDictFinal[26][ascii1][ascii2]:
-                        finalResult.append(i)
-        else:
-            if ascii1<0:
-                if ascii2<0:
-                    if i in engDictFinal[ascii0][26][26]:
-                        finalResult.append(i)
-                else:
-                    if i in engDictFinal[ascii0][26][ascii2]:
-                        finalResult.append(i)
-            else:
-                if ascii2<0:
-                    if i in engDictFinal[ascii0][ascii1][26]:
-                        finalResult.append(i)
-                else:
-                    if i in engDictFinal[ascii0][ascii1][ascii2]:
-                        finalResult.append(i)
+        if len(dictWord)==wordLen:
+            a.append(dictWord)
+    finalResult = list(set(anagram) & set(a))
     if finalResult == []:
         print("영어 사전에 해당하는 단어가 없습니다.")
     else:
@@ -104,3 +50,6 @@ if lang == "0":
             print(i)
 else: 
     a = 1
+
+
+print("time :", time.time() - start)  # 현재시각 - 시작시간 = 실행 시간
