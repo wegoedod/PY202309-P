@@ -1,4 +1,3 @@
-from itertools import permutations
 import korSeparator
 import engDict
 import re
@@ -6,14 +5,26 @@ import time
 start = time.time()  # 시작 시간 저장
 
 
-def generate_anagrams(word):
-    # 문자열의 모든 순열을 생성
-    permutationsList = [''.join(p) for p in permutations(word)]
-    
-    # 중복된 순열을 제거하고 정렬
-    uniqueAnagrams = sorted(set(permutationsList))
-    
-    return uniqueAnagrams
+def generateAnagrams(word,engdict):
+    def generate(currrent, remaining):
+        if not remaining:
+            uniqueAnagrams.add(currrent)
+            return
+        cmp = len(currrent)
+        if cmp>1:
+            PASS = 1
+            for i in engdict:
+                if i[:cmp]==currrent:
+                    PASS = 0
+                    break
+            if PASS:
+                return
+        for i in range(len(remaining)):
+            generate(currrent + remaining[i], remaining[:i] + remaining[i+1:])
+    lengthWord = len(word)
+    uniqueAnagrams = set()
+    generate('', word)
+    return  sorted(set(uniqueAnagrams))
 
 while 1:
     lang = input("영어와 한국어 중 생성할 아나그램을 선택하세요.(0=영어,1=한국어): ")
@@ -36,13 +47,13 @@ if lang == "1":
     wordSpells = korSeparator.korSeparator(word)
 if lang == "0":
     finalResult = []
-    anagram = generate_anagrams(word)
-    engDictFinal = []
+    engDictFinal = set()
     for i in engDict.engDict:
         dictWord = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z]", "",i.lower())
         if len(dictWord)==wordLen:
-            engDictFinal.append(dictWord)
-    finalResult = list(set(anagram) & set(engDictFinal))
+            engDictFinal.add(dictWord)
+    anagram = generateAnagrams(word,engDictFinal)
+    finalResult = sorted(list(set(anagram) & engDictFinal))
     if finalResult == []:
         print("영어 사전에 해당하는 단어가 없습니다.")
     else:
