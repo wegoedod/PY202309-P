@@ -12,9 +12,7 @@ def korSeparator(string):
     # 종성 리스트. 0 ~ 27
     JONGSUNG_LIST = ['ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
     
-    print(string)
     sp_list = list(string) # string make list
-
     result = []
     for keyword in sp_list:
 
@@ -34,7 +32,6 @@ def korSeparator(string):
                 
                 # 종성
                 char3 = int((char_code - (CHOSUNG * char1) - (JUNGSUNG * char2)))
-                print(char3)
                 if char3 != 0:
                     result.append(JONGSUNG_LIST[char3-1])
                 
@@ -46,4 +43,4 @@ def korSeparator(string):
     return result
 
 if __name__ == "__main__":
-    print(korSeparator("ㄱㄴee사과뱀힣"))
+    print(korSeparator("감자\n"))
