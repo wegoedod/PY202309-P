@@ -31,7 +31,7 @@ if lang == "0":
         for i in range(len(finalResult)):
             print(f"{i+1}. {finalResult[i]}")
     else:
-        print("국어 사전에 해당하는 단어가 없습니다.")
+        print("영어 사전에 해당하는 단어가 없습니다.")
 else: 
     wordSpells = korSeparator.korSeparator(word)
     wordSpellsLenght = len(wordSpells)
